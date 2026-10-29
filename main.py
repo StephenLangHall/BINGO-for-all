@@ -1,5 +1,5 @@
 import random
-from colorama import Fore, Style, ansi
+from colorama import Fore, Back, Style, ansi, init
 
 INVERT=Fore.GREEN
 RESET=Style.RESET_ALL
@@ -106,7 +106,6 @@ while True:
 
         # VARIABLES USED: Numbers_Called, Number, BingoCalled, HORSE_CHECK
         # IMPORTS USED: colorama
-        from colorama import Fore, Back, Style, init
 
         init(autoreset=True)
 
