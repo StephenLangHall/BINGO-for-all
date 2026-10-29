@@ -1,6 +1,10 @@
 import random
 from colorama import Fore, Style, ansi
 
+INVERT=Fore.GREEN
+RESET=Style.RESET_ALL
+CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
+
 #Mode Selection
 while True:
     print('Welcome to Bingo!\nPlease select a mode.\n1: Bingo Board\n2: Bingo Number Caller\nQuit: Exit')
@@ -8,10 +12,6 @@ while True:
 
 
     if Mode=="1":
-        INVERT=Fore.GREEN
-        RESET=Style.RESET_ALL
-        CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
-
         g=[[0 for _ in range(5)] for _ in range(5)]
 
 
