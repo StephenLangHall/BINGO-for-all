@@ -205,6 +205,7 @@ while True:
                         BingoCalled = "n"
                     elif CHECK != "n" and CHECK != "y":
                         print('You answered neither y or n. We will assume the bingo was not accurate.')
+                        BingoCalled = "n"
 
 
         init(autoreset=False)
@@ -213,6 +214,8 @@ while True:
             Back.BLACK + Fore.LIGHTWHITE_EX + "\t" + Back.LIGHTYELLOW_EX + Fore.BLACK + "\t{Numbers_Called}\t" + Back.BLACK + Fore.LIGHTWHITE_EX + "\t")
         print(Back.LIGHTYELLOW_EX + Fore.LIGHTYELLOW_EX + "\t                 \t\t\t")
         print(*Numbers_Called, sep="\n")
+        input('Press Enter to return to the main menu.')
+        print(CLEAR)
     elif Mode == "Quit":
         break
     else:
