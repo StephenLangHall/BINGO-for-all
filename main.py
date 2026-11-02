@@ -1,5 +1,5 @@
 import random
-from colorama import Fore, Style, ansi
+from colorama import Fore, Back, Style, ansi, init
 
 INVERT=Fore.GREEN
 RESET=Style.RESET_ALL
@@ -7,8 +7,8 @@ CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
 
 #Mode Selection
 while True:
-    print('Welcome to Bingo!\nPlease select a mode.\n1: Bingo Board\n2: Bingo Number Caller\nQuit: Exit')
-    Mode = input("")
+    print('Welcome to Bingo!\n1: Bingo Board\n2: Bingo Number Caller\n0: Exit')
+    Mode = input("\nPlease select a mode: ")
 
 
     if Mode=="1":
@@ -106,7 +106,6 @@ while True:
 
         # VARIABLES USED: Numbers_Called, Number, BingoCalled, HORSE_CHECK
         # IMPORTS USED: colorama
-        from colorama import Fore, Back, Style, init
 
         init(autoreset=True)
 
@@ -205,7 +204,6 @@ while True:
                         BingoCalled = "n"
                     elif CHECK != "n" and CHECK != "y":
                         print('You answered neither y or n. We will assume the bingo was not accurate.')
-                        BingoCalled = "n"
 
 
         init(autoreset=False)
@@ -214,9 +212,8 @@ while True:
             Back.BLACK + Fore.LIGHTWHITE_EX + "\t" + Back.LIGHTYELLOW_EX + Fore.BLACK + "\t{Numbers_Called}\t" + Back.BLACK + Fore.LIGHTWHITE_EX + "\t")
         print(Back.LIGHTYELLOW_EX + Fore.LIGHTYELLOW_EX + "\t                 \t\t\t")
         print(*Numbers_Called, sep="\n")
-        input('Press Enter to return to the main menu.')
-        print(CLEAR)
-    elif Mode == "Quit":
+    elif Mode == "0":
         break
     else:
+        print(CLEAR)
         print('\nPlease try again.\n')
