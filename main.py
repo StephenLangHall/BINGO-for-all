@@ -5,9 +5,10 @@ INVERT=Fore.GREEN
 RESET=Style.RESET_ALL
 CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
 
+print(CLEAR)
+
 #Mode Selection
 while True:
-    print(CLEAR)
     print('Welcome to Bingo!\n1: Bingo Board\n2: Bingo Number Caller\n0: Exit')
     Mode = input("\nPlease select a mode: ")
 
