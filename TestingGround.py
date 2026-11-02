@@ -1,0 +1,201 @@
+##BETA VERSION##
+import random
+from colorama import Fore, Back, Style, ansi, init
+
+INVERT=Fore.GREEN
+RESET=Style.RESET_ALL
+CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
+
+#Mode Selection
+while True:
+    print(CLEAR)
+    print('Welcome to Bingo!\n-----------------------\n1: Bingo Board\n2: Bingo Number Caller\n0: Exit')
+    Mode = input("\nPlease select a mode: ")
+
+
+    if Mode=="1":
+        g=[[0 for _ in range(5)] for _ in range(5)]
+
+
+        # Fill in the board
+        used=[]
+
+        for y in range(0,5):
+            for x in range(0,5):
+                offset=x*15
+                while (r:=random.randint(1+offset,15+offset)) in used:
+                    continue
+                g[y][x]=r
+                used.append(r)
+        g[2][2]-=1000
+
+        BINGO=[]
+
+        print(CLEAR)
+        while (wincondition:=input("Which win condition? (any/horiz/vert/angle)  ").lower()) \
+                not in ["any","horiz","vert","angle"]:
+                    continue
+
+        while len(BINGO)==0:
+            # Clear screen
+            print(CLEAR)
+
+            # Draw board
+            for row in g:
+                print(*[" .." if n<0 else f"{n:>3}" for n in row],sep='')
+            print()
+
+            # Get user input
+            number=int(input("(Only input the number, not the letter!)\nEx. input '21' not 'B-21'.\nWhat number was called?  "))
+
+            # Set cell called by user
+            for y in range(0,5):
+                for x in range(0,5):
+                    if g[y][x]==number:
+                        g[y][x]-=1000
+            #g=[[cell-1000 if cell==number else cell for cell in row] for row in g]
+
+            # Check for BINGO
+            wins = []
+            if wincondition=="any" or wincondition=="angle":
+                wins += [[[0,0],[1,1],[2,2],[3,3],[4,4]],
+                         [[0,4],[1,3],[2,2],[3,1],[4,0]]]
+            if wincondition=="any" or wincondition=="horiz":
+                wins += [[[0,0],[0,1],[0,2],[0,3],[0,4]],
+                         [[1,0],[1,1],[1,2],[1,3],[1,4]],
+                         [[2,0],[2,1],[2,2],[2,3],[2,4]],
+                         [[3,0],[3,1],[3,2],[3,3],[3,4]],
+                         [[4,0],[4,1],[4,2],[4,3],[4,4]]]
+            if wincondition=="any" or wincondition=="vert":
+                wins += [[[0,0],[1,0],[2,0],[3,0],[4,0]],
+                         [[0,1],[1,1],[2,1],[3,1],[4,1]],
+                         [[0,2],[1,2],[2,2],[3,2],[4,2]],
+                         [[0,3],[1,3],[2,3],[3,3],[4,3]],
+                         [[0,4],[1,4],[2,4],[3,4],[4,4]]]
+
+            # Append wins to BINGO
+            for win in wins:
+                if all(g[a][b]<0 for [a,b] in win):
+                    BINGO.append(win)
+
+
+        else:
+            # Clear screen
+            print(CLEAR)
+
+            # Draw board
+            for y,row in enumerate(g):
+                for x,cell in enumerate(row):
+                    if cell<0:
+                        coord=[y,x]
+                        ch=" **"
+                        for win in BINGO:
+                            if coord in win:
+                                ch=f" {INVERT}{cell+1000:>2}{RESET}"
+                        print(ch,end='')
+                    else:
+                        print(f"{cell:>3}",end='')
+                print()
+
+            print()
+            for win in BINGO:
+                print(win)
+            print("BINGOOOOO!!!!")
+
+    elif Mode=="2":
+
+        # Bingo Caller Program
+
+        # VARIABLES USED: Numbers_Called, Number, BingoCalled, HORSE_CHECK
+        # IMPORTS USED: colorama
+        print(CLEAR)
+
+        init(autoreset=True)
+
+        ###Arrays and Variables###
+        Numbers_Called = []
+        HORSE_CHECK = "horse"
+        ###End of Arrays and Variables###
+
+        ###Setting up Functions###
+        def ShowNumbers():
+            init(autoreset=False)
+            print(Back.YELLOW + Fore.BLACK + "\t\t{Numbers_Called}\t")
+            print(Back.YELLOW + Fore.YELLOW + "\t--------------------------------")
+            print(*Numbers_Called, sep="\n")
+            init(autoreset=True)
+
+        def NumGen():
+            Number = random.randint(1, 75)
+            if Number > 75 or Number < 1:
+                print("The Number must be between 1 and 75")
+            elif Number >= 1 and Number < 15:
+                Number = ("B", Number)
+            elif Number >= 16 and Number < 30:
+                Number = ("I", Number)
+            elif Number >= 31 and Number < 45:
+                Number = ("N", Number)
+            elif Number >= 46 and Number < 60:
+                Number = ("G", Number)
+            else:
+                Number = ("O", Number)
+            print('\n' + Back.GREEN + Fore.LIGHTWHITE_EX + f"{Number}")
+            Numbers_Called.append(Number)
+        ###End of Functions###
+
+        input("Press Enter to draw a bingo ball!")
+
+        NumGen()
+
+        BingoCalled = input("Has Anyone Called Bingo? (y/n): ").lower()
+
+        if BingoCalled == "y":
+            print(CLEAR)
+            print(Back.LIGHTWHITE_EX + Fore.RED + "Don't lie.")
+        else:
+            while BingoCalled != "y" and BingoCalled != "n":
+                print(CLEAR)
+                print("Please enter either 'y' or 'n' next time.")
+                BingoCalled = input("Has Anyone Called Bingo? (y/n): ").lower()
+
+            while BingoCalled != "y":
+                if HORSE_CHECK != "called":
+                    print(CLEAR)
+                print(Fore.WHITE + "We need to pick another number.....")
+
+                ## Horse check is there to be an options menu to give the Host tools
+                HORSE_CHECK = input(
+                    'Press Enter to draw a bingo ball or type "called" to see what numbers have been called: ').lower()
+                if HORSE_CHECK == "called":
+                    print(CLEAR)
+                    ShowNumbers()
+                    continue
+
+                NumGen()
+
+                BingoCalled = input("\nHas Anyone Called Bingo? (y/n): ").lower()
+                while BingoCalled != "y" and BingoCalled != "n":
+                    print("Please enter either 'y' or 'n' next time.")
+                    BingoCalled = input("\nHas Anyone Called Bingo? (y/n): ").lower()
+                if BingoCalled == "y":
+                    print(CLEAR)
+                    print("Come on up!")
+                    print("\nThe following numbers have been called.")
+
+                    ShowNumbers()
+
+                    CHECK = input("\nWas the bingo accurate? (y/n): ").lower()
+                    if CHECK == "n":
+                        BingoCalled = "n"
+                    elif CHECK != "n" and CHECK != "y":
+                        print('You answered neither y or n. We will assume the bingo was not accurate.')
+                        BingoCalled = "n"
+
+
+        ShowNumbers()
+
+    elif Mode == "0":
+        break
+    else:
+        print(CLEAR)
+        print('\nPlease try again.\n')
