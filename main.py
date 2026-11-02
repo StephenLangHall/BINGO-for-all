@@ -132,7 +132,7 @@ while True:
         else:
             Number = ("O", Number)
 
-        print(Back.GREEN + Fore.LIGHTWHITE_EX + f"{Number}")
+        print('\n' + Back.GREEN + Fore.LIGHTWHITE_EX + f"{Number}")
         # attempting to add to the array
         Numbers_Called.append(Number)
 
@@ -144,8 +144,9 @@ while True:
             while BingoCalled != "y" and BingoCalled != "n":
                 print("Please enter either 'y' or 'n' next time.")
                 BingoCalled = input("\nHas Anyone Called Bingo? (y/n): ").lower()
-            print(Fore.WHITE + "\nWe need to pick another number.....")
+
             while BingoCalled != "y":
+                print(Fore.WHITE + "\nWe need to pick another number.....")
                 # time to pick a number
                 HORSE_CHECK = input(
                     'Press Enter to draw a bingo ball or type "called" to see what numbers have been called: ').lower()
@@ -178,7 +179,7 @@ while True:
                 else:
                     Number = ("O", Number)
 
-                print(Back.GREEN + Fore.LIGHTWHITE_EX + f"{Number}")
+                print('\n' + Back.GREEN + Fore.LIGHTWHITE_EX + f"{Number}")
                 # attempting to add to the array
                 Numbers_Called.append(Number)
 
