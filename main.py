@@ -7,6 +7,7 @@ CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
 
 #Mode Selection
 while True:
+    print(CLEAR)
     print('Welcome to Bingo!\n1: Bingo Board\n2: Bingo Number Caller\n0: Exit')
     Mode = input("\nPlease select a mode: ")
 
