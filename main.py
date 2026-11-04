@@ -5,6 +5,8 @@ INVERT=Fore.GREEN
 RESET=Style.RESET_ALL
 CLEAR=ansi.clear_screen() + ansi.Cursor.POS(1, 1)
 
+print(CLEAR)
+
 #Mode Selection
 while True:
     print(CLEAR)
